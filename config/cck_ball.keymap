@@ -67,7 +67,7 @@
         nav_layer {
             display-name = "NAV";
             bindings = <
-&boodloader  &trans    &trans    &trans     &trans     &trans    &trans  &trans          &trans          &trans           &trans  &bootloader
+&bootloader  &trans    &trans    &trans     &trans     &trans    &trans  &trans          &trans          &trans           &trans  &bootloader
 &trans  &trans    &trans    &trans     &trans     &kp ESC   &trans  &trans          &kp UP_ARROW    &trans           &trans  &kp DELETE
 &trans  &kp LGUI  &kp LALT  &kp LCTRL  &kp LSHFT  &trans    &trans  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &trans  &trans
 &trans  &trans    &trans    &trans     &trans     &kp TAB   &trans  &trans          &trans          &trans           &trans  &trans
