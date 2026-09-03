@@ -1,6 +1,13 @@
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 1000 // 600
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 12   // 10
 
+#define BASE 0
+#define NAV 1
+#define SYM 2
+#define SCROLL 3
+#define SNIPE 4
+#define GAME 5
+
 #include <input/processors.dtsi>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 #include <behaviors.dtsi>
@@ -14,7 +21,7 @@
 
 &msc {
     acceleration-exponent = <0>;      // 0
-    time-to-max-speed-ms = <300>;       // 300
+    time-to-max-speed-ms = <300>;     // 300
     delay-ms = <0>;                   // 0
 };
 
@@ -27,7 +34,6 @@
 &soft_off { hold-time-ms = <2000>; };
 
 / {
-    // 上下滚动编码器行为
     scroll_vertical_encoder: scroll_vertical_encoder {
         compatible = "zmk,behavior-sensor-rotate";
         #sensor-binding-cells = <0>;
@@ -35,57 +41,57 @@
         tap-ms = <100>;
     };
 
-    // 左右滚动编码器行为
     scroll_horizontal_encoder: scroll_horizontal_encoder {
         compatible = "zmk,behavior-sensor-rotate";
         #sensor-binding-cells = <0>;
         bindings = <&msc SCRL_LEFT>, <&msc SCRL_RIGHT>;
         tap-ms = <100>;
     };
-    
-    behaviors {
-    };
 
     keymap {
         compatible = "zmk,keymap";
 
-        QWERTY {
+        base_layer {
+            display-name = "BASE";
             bindings = <
-&kp ESC           &kp N1        &kp N2        &kp N3      &kp N4     &kp N5  &kp N6  &kp N7     &kp N8     &kp N9          &kp N0          &kp BACKSPACE
-&kp TAB           &kp Q         &kp W         &kp E       &kp R      &kp T   &kp Y   &kp U      &kp I      &kp O           &kp P           &kp BSLH
-&kp CAPSLOCK      &kp A         &kp S         &kp D       &lt 3 F    &kp G   &kp H   &kp J      &kp K      &kp L           &kp SEMI        &kp SQT
-&kp LEFT_SHIFT    &kp Z         &kp X         &kp C       &kp V      &kp B   &kp N   &kp M      &kp COMMA  &kp DOT         &kp UP_ARROW    &kp FSLH
-&kp LEFT_CONTROL  &kp LEFT_WIN  &kp LEFT_ALT  &kp DELETE  &kp SPACE  &mo 1   &mo 2   &kp SPACE  &kp ENTER  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW
+&kp ESC       &kp N1        &kp N2        &kp N3        &kp N4         &kp N5      &kp N6      &kp N7        &kp N8        &kp N9           &kp N0        &kp BSPC
+&kp TAB       &kp Q         &kp W         &kp E         &kp R          &kp T       &kp Y       &kp U         &kp I         &kp O            &kp P         &kp BSLH
+&caps_word    &kp A   &kp S    &kp D    &kp F    &kp G       &kp H       &kp J   &kp K    &kp L       &kp SEMI &kp SQT
+&kp LSHFT     &kp Z         &kp X         &kp C         &kp V          &kp B       &kp N       &kp M         &kp COMMA     &kp DOT          &kp FSLH      &kp ENTER
+&kp LCTRL         &kp LALT         &kp LGUI         &mkp RCLK       &kp SPACE      &mo SYM     &mo NAV     &mkp LCLK       &kp LS(SPACE) &kp LGUI            &kp LALT         &kp LCTRL
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        F_layers {
+        nav_layer {
+            display-name = "NAV";
             bindings = <
-&kp F12  &kp F1  &kp F2  &kp F3  &kp F4  &kp F5  &kp F6     &kp F7     &kp F8  &kp F9  &kp F10  &kp F11
-&kp A    &none   &none   &none   &none   &trans  &none      &none      &none   &trans  &trans   &trans
-&trans   &none   &none   &none   &none   &trans  &mkp LCLK  &mkp RCLK  &trans  &trans  &trans   &trans
-&trans   &trans  &trans  &trans  &trans  &none   &none      &none      &trans  &trans  &none    &trans
-&trans   &trans  &trans  &trans  &trans  &trans  &mkp LCLK  &mkp RCLK  &trans  &trans  &trans   &trans
+&boodloader  &trans    &trans    &trans     &trans     &trans    &trans  &trans          &trans          &trans           &trans  &bootloader
+&trans  &trans    &trans    &trans     &trans     &kp ESC   &trans  &trans          &kp UP_ARROW    &trans           &trans  &kp DELETE
+&trans  &kp LGUI  &kp LALT  &kp LCTRL  &kp LSHFT  &trans    &trans  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &trans  &trans
+&trans  &trans    &trans    &trans     &trans     &kp TAB   &trans  &trans          &trans          &trans           &trans  &trans
+&trans  &trans    &trans    &trans     &trans     &trans    &trans  &trans          &trans          &trans           &trans  &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        BT_layers {
+        sym_layer {
+            display-name = "SYM";
             bindings = <
-&trans  &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &trans      &trans  &trans  &trans  &trans  &kp W
-&trans  &trans          &trans        &trans        &trans        &trans        &trans      &trans  &trans  &trans  &trans  &trans
-&trans  &bt BT_CLR_ALL  &trans        &trans        &trans        &trans        &trans      &trans  &trans  &trans  &trans  &trans
-&trans  &trans          &trans        &bt BT_CLR    &trans        &trans        &bt BT_NXT  &trans  &trans  &trans  &trans  &trans
-&trans  &trans          &trans        &trans        &trans        &trans        &trans      &trans  &trans  &trans  &trans  &trans
+&kp LS(GRAVE)  &kp LS(N1)    &kp LS(N2)  &kp LS(N3)  &kp LS(N4)    &kp LS(N5)  &kp LS(N6)    &kp LS(N7)  &kp LS(N8)  &kp LS(N9)    &kp LS(N0)    &kp LS(EQUAL)
+&kp LS(LBKT)   &kp LS(RBKT)  &kp LBKT    &kp RBKT    &kp LS(MINUS) &kp EQUAL   &kp LS(COMMA) &kp N7      &kp N8      &kp N9        &kp LS(DOT)   &kp MINUS
+&kp BSLH       &kp LS(BSLH)  &kp GRAVE   &kp SEMI    &kp LS(SQT)   &kp FSLH    &kp SQT       &kp N4      &kp N5      &kp N6        &kp LS(SEMI)  &kp BSLH
+&trans         &trans        &trans      &trans      &trans        &trans      &kp N0        &kp N1      &kp N2      &kp N3        &kp LS(FSLH)  &trans
+&trans         &trans        &trans      &trans      &trans        &trans      &trans        &trans      &trans      &trans        &trans        &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        scroll-layers {
+        scroll_layer {
+            display-name = "SCROLL";
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
@@ -97,7 +103,8 @@
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        snipe-layers {
+        snipe_layer {
+            display-name = "SNIPE";
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
@@ -106,8 +113,21 @@
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
 
-            sensor-bindings = <&scroll_vertical_encoder>,   // 编码器1：上下滚动
-                             <&scroll_horizontal_encoder>;  // 编码器2：左右滚动
+            sensor-bindings = <&scroll_vertical_encoder>,
+                             <&scroll_horizontal_encoder>;
+        };
+
+        game_layer {
+            display-name = "GAME";
+            bindings = <
+&kp ESC       &kp N1     &kp N2     &kp N3     &kp N4     &kp N5     &kp N6     &kp N7     &kp N8     &kp N9     &kp N0     &kp DELETE
+&kp TAB       &kp Q      &kp W      &kp E      &kp R      &kp T      &kp Y      &kp U      &kp I      &kp O      &kp P      &kp LBKT
+&kp LCTRL     &kp A      &kp S      &kp D      &kp F      &kp G      &kp H      &kp J      &kp K      &kp L      &kp SEMI   &kp SQT
+&tog GAME     &kp Z      &kp X      &kp C      &kp V      &kp B      &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH   &kp RSHFT
+&none         &none      &none      &kp LALT   &kp SPACE  &kp LSHFT  &mo SYM    &kp BSPC   &kp ENTER  &none      &none      &none
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
     };
 };
