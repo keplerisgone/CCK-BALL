@@ -61,7 +61,7 @@
 &kp LCTRL         &kp LALT         &kp LGUI         &kp SPACE      &mo SYM &mkp RCLK   &mkp LCLK  &mo NAV     &kp LS(SPACE) &kp LGUI            &kp LALT         &kp LCTRL
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &scroll_vertical_encoder>;
         };
 
         nav_layer {
@@ -74,7 +74,7 @@
 &trans  &trans    &trans    &trans     &trans     &trans    &trans  &trans          &trans          &trans           &trans  &trans
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &scroll_vertical_encoder>;
         };
 
         sym_layer {
@@ -87,7 +87,7 @@
 &trans         &trans        &trans      &trans      &trans        &trans      &trans        &trans      &trans      &trans        &trans        &trans
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &scroll_vertical_encoder>;
         };
 
         scroll_layer {
@@ -100,7 +100,7 @@
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &scroll_vertical_encoder>;
         };
 
         snipe_layer {
@@ -127,7 +127,7 @@
 &none         &none      &none      &kp LALT   &kp SPACE  &kp LSHFT  &mo SYM    &kp BSPC   &kp ENTER  &none      &none      &none
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &scroll_vertical_encoder>;
         };
     };
 };
